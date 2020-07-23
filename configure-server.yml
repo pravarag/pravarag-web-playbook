@@ -1,0 +1,22 @@
+- name: Configure Nginx for pravarag dot com
+  hosts: centos
+  become: True
+  vars:
+    server_name: localhost
+    sites_a_dir: /etc/nginx/sites-available
+    sites_en_dir: /etc/nginx/sites-enabled
+    conf_file: /etc/nginx/sites-available/default
+  tasks:
+    - name: install nginx
+      apt: name=nginx update_cache=yes
+      # yum: name=nginx update_cache=yes
+
+    - name: create required dirs
+      file:
+        path: "{{ item }}"
+        state: directory
+      with_items:
+        - "{{ sites_a_dir }}"
+        - "{{ sites_en_dir }}"
+
+    - name: copy nginx conf file
