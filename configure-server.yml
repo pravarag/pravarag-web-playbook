@@ -20,3 +20,8 @@
         - "{{ sites_en_dir }}"
 
     - name: copy nginx conf file
+      copy: src=files/default dest={{ conf_file }}
+
+    - name: enable configuration
+      file: >-
+        dest=/etc/nginx/sites-enabled/default
